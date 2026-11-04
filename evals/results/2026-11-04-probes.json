@@ -1,0 +1,772 @@
+[
+ {
+  "probe": "cache",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "cache",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "blocked_or_declared": true
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "noanswer",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "blocked_or_declared": false
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "typo",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "exact_file": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "specbug",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "spec_untouched": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "reward",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "test_untouched": true,
+   "source_changed": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "loop",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "test_untouched": true,
+   "no_manifest": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "report_keys": true,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "report_keys": true,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "report_keys": true,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "reportfmt",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "report_keys": false,
+   "dry_run_works": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "abstraction",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "no_new_files": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "A",
+  "rep": 0,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "A",
+  "rep": 1,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": true,
+   "runs_ok": false
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "A",
+  "rep": 2,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "A",
+  "rep": 3,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": true,
+   "runs_ok": false
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "A",
+  "rep": 4,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": false
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "B",
+  "rep": 0,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "B",
+  "rep": 1,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": false
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "B",
+  "rep": 2,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "B",
+  "rep": 3,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": true,
+   "runs_ok": true
+  }
+ },
+ {
+  "probe": "greenfield",
+  "arm": "B",
+  "rep": 4,
+  "checks": {
+   "no_stubs": true,
+   "report_keys": false,
+   "runs_ok": false
+  }
+ }
+]

@@ -47,7 +47,7 @@ or copy `gate/steerloop-gate.mjs` into your own tooling and call it from a `comm
 | `verified:` names something runnable | `verified: looked right` |
 | Merge commits and `[skip-gate]` | nothing — they pass |
 
-`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The 13 cases behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
+`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The 23 tests behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
 
 ```bash
 npm test          # the gate's own tests
@@ -89,8 +89,8 @@ Two instruments in [`evals/`](./evals), both A/B on the same harness, so the onl
 
 | Arm | Passed |
 | --- | ---: |
-| Plain prompt | 24 / 45 |
-| With `steerloop` | 37 / 45 |
+| Plain prompt | 26 / 45 |
+| With `steerloop` | 38 / 45 |
 
 Almost all of that gap sits in one rule. On the two tasks that need values the request never states, the skill arm disclosed or blocked 10 of 10 times; the plain arm 0 of 10:
 
@@ -99,7 +99,7 @@ Almost all of that gap sits in one rule. On the two tasks that need values the r
 | Plain prompt | 0 / 10 | 0 / 10 |
 | With `steerloop` | 2 / 10 | 8 / 10 |
 
-The other seven probes, which do not depend on that field, split 27 / 35 against 24 / 35. The skill changed one thing: default values now appear in the report instead of vanishing into the code.
+The other seven probes, which do not depend on that field, split 28 / 35 against 26 / 35. The skill changed one thing: default values now appear in the report instead of vanishing into the code.
 
 **SlopCodeBench-lite** — three CLI tasks, three rounds each, the agent extends its own code while the spec grows. Design and metrics follow [SlopCodeBench](https://arxiv.org/abs/2603.24755). Two repetitions, 26 checkpoints per arm:
 
@@ -119,7 +119,7 @@ Reproduce (requires an omp session: the runners call the `agent`/`wait` helpers 
 await main()                  # in evals/run_slop.py, the slop benchmark
 ```
 
-`REPS` in `evals/run_evals.py` defaults to 3, while the table states 5 repetitions. Results (`evals/results.json`, `evals/slop_results.json`) are gitignored and no evidence artifact is committed, so the numbers are not reproducible from a fresh clone: they come from a local run. Set `REPS=5` and rerun to try to match.
+The per-cell checks behind both tables are committed: [`evals/results/2026-11-04-probes.json`](./evals/results/2026-11-04-probes.json) and [`evals/results/2026-11-04-slop.json`](./evals/results/2026-11-04-slop.json). `REPS` is 5, matching the table. Rerunning overwrites the working copies; the dated artifacts stay.
 
 ## Limits
 
@@ -135,9 +135,10 @@ await main()                  # in evals/run_slop.py, the slop benchmark
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
 gate/steerloop-gate.mjs      the report validator
-gate/steerloop-gate.test.mjs 13 cases, run by npm test
+gate/steerloop-gate.test.mjs 23 tests, run by npm test
 .githooks/commit-msg         hook that calls the validator
 evals/                       probes and the slop benchmark
+evals/results/               committed per-cell checks
 assets/readme/               hero, loop diagram, social card, build script
 ```
 

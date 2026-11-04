@@ -21,7 +21,7 @@ from probes import PROBES  # noqa: E402
 SKILL = ROOT / "skills" / "steerloop" / "SKILL.md"
 RUNS = ROOT / "evals" / "runs"
 SAMPLE_TSV = "name\tage\nann\t30\nbob\t41\n"
-REPS = 3
+REPS = 5
 
 
 def snapshot(d):
