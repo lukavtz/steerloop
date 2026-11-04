@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="t d">
+  <title id="t">The slice loop</title>
+  <desc id="d">Five steps: restate, reuse, red check, smallest code, run. An amber gate after restate sends missing values back to the human. The run step loops into the next slice.</desc>
+
+  <rect width="1200" height="300" rx="20" fill="#1B1B1B"/>
+
+  <g stroke="#4A4E54" stroke-width="1.5" fill="none">
+    <line x1="110" y1="118" x2="1010" y2="118"/>
+    <path d="M1010 118 V244 H110 V128" stroke-dasharray="5 6"/>
+    <path d="M110 126 l-6 11 h12 z" fill="#4A4E54" stroke="none"/>
+  </g>
+
+  <g fill="#1B1B1B" stroke="#C9CDD2" stroke-width="2">
+    <circle cx="110" cy="118" r="7"/>
+    <circle cx="335" cy="118" r="7"/>
+    <circle cx="560" cy="118" r="7"/>
+    <circle cx="785" cy="118" r="7"/>
+    <circle cx="1010" cy="118" r="7"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" text-anchor="middle">
+    <g fill="#E8E9EB" font-size="21">
+      <text x="110" y="170">restate</text>
+      <text x="335" y="170">reuse</text>
+      <text x="560" y="170">red check</text>
+      <text x="785" y="170">smallest code</text>
+      <text x="1010" y="170">run</text>
+    </g>
+    <g fill="#7A7E85" font-size="16">
+      <text x="110" y="196">what, why, how</text>
+      <text x="335" y="196">search first</text>
+      <text x="560" y="196">fails before</text>
+      <text x="785" y="196">root cause</text>
+      <text x="1010" y="196">report it</text>
+    </g>
+    <text x="560" y="272" fill="#7A7E85" font-size="18">next slice</text>
+  </g>
+
+  <g>
+    <line x1="222" y1="98" x2="222" y2="138" stroke="#E8B04B" stroke-width="3"/>
+    <rect x="212" y="92" width="20" height="6" rx="3" fill="#E8B04B"/>
+    <text x="236" y="82" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#E8B04B">missing value → ask, wait</text>
+  </g>
+</svg>

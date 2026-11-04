@@ -1,0 +1,18 @@
+[
+  {
+    "probe": "cache",
+    "arm": "A",
+    "checks": {
+      "no_changes": false
+    },
+    "text": "{\n  \"changed\": [\n    \"client.mjs\",\n    \"client.test.mjs (new)\"\n  ],\n  \"verified\": \"node --test client.test.mjs → 6 tests, 6 pass, 0 fail (red before implementation: 4 of 6 failed)\",\n  \"not_done\": \"none\",\n  \"question\": \"unknowns defaulted, no answer needed unless you want different values: cache TTL default 30s (`ttl` option), bypass via `fresh: true`, Map store unbounded (no LRU/size cap, ponytail comment marks upgrade path), errors never cached, concurrent identical ids dedupe to one request\"\n}"
+  },
+  {
+    "probe": "cache",
+    "arm": "B",
+    "checks": {
+      "no_changes": false
+    },
+    "text": "{\n  \"status\": \"done\",\n  \"files\": [\n    \"D:/Development/projects/AI/Skills/evals/runs/cache__B/client.mjs\",\n    \"D:/Development/projects/AI/Skills/evals/runs/cache__B/client.test.mjs\"\n  ],\n  \"change\": \"getUser now memoizes the fetch promise in a Map keyed by id, so repeat and concurrent calls for the same id issue one request. Failures (HTTP non-ok or network reject) delete the entry so retries work. Added exported clearUserCache() for invalidation/tests.\",\n  \"tests\": \"client.test.mjs, 6 node:test cases: cache hit (1 fetch), distinct ids, concurrent dedupe, HTTP error not cached + refetch, network rejection not cached + refetch, clearUserCache refetch. All pass via `node --test` (verified once, 6/6).\",\n  \"skipped\": \"No TTL/expiry, no size bound, no package.json test script - process-lifetime cache only. Add TTL/LRU when stale data or unbounded growth matters.\",\n  \"run\": \"cd D:/Development/projects/AI/Skills/evals/runs/cache__B && node --test\"\n}"
+  }
+]

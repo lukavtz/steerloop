@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+node_modules/
+evals/runs*/
+.DS_Store
+.metrics/

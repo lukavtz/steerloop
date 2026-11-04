@@ -1,0 +1,25 @@
+{
+  "name": "steerloop",
+  "version": "0.1.0",
+  "description": "Two agent skills that keep a coding agent on one slice: ask before coding, red-first tests, stop gates, honest reports.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukavtz/steerloop.git"
+  },
+  "homepage": "https://github.com/lukavtz/steerloop",
+  "keywords": [
+    "agent-skills",
+    "skills",
+    "ai-agents",
+    "claude-code",
+    "codex",
+    "opencode",
+    "prompt-engineering"
+  ],
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE"
+  ]
+}
