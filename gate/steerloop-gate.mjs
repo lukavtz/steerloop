@@ -25,17 +25,30 @@ function emptyProblems(text) {
   }).map((key) => `${key}: needs a value, write "none" when nothing applies`);
 }
 
+function duplicateProblems(text) {
+  return KEYS.filter((key) => {
+    const pattern = new RegExp(`^[ \\t*#>-]*${key}[ \\t*]*:[ \\t*]`, "gmi");
+    return (text.match(pattern) ?? []).length > 1;
+  }).map((key) => `duplicate key: ${key}`);
+}
+
 function evidenceProblem(text) {
   const value = field(text, "verified") ?? "";
   if (RUNNERS.test(value) || value.includes("`")) return [];
   return ["verified: names no command (expected something like \"npm test\" or `node --test`)"];
 }
 
-export function validate(text) {
+export function validate(raw) {
+  const text = raw.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
   if (/^\[skip-gate\][ \t]*$/im.test(text) || /^Merge (branch|pull request|remote-tracking branch|tag)\b/i.test(text.trim())) {
     return { ok: true, problems: [], skipped: true };
   }
-  const problems = [...missingProblems(text), ...emptyProblems(text), ...evidenceProblem(text)];
+  const problems = [
+    ...missingProblems(text),
+    ...duplicateProblems(text),
+    ...emptyProblems(text),
+    ...evidenceProblem(text),
+  ];
   return { ok: problems.length === 0, problems, skipped: false };
 }
 

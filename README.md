@@ -47,7 +47,7 @@ or copy `gate/steerloop-gate.mjs` into your own tooling and call it from a `comm
 | `verified:` names something runnable | `verified: looked right` |
 | Merge commits and `[skip-gate]` | nothing — they pass |
 
-`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The 23 tests behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
+`STEERLOOP_SKIP=1` bypasses while it is set, for the case where the gate itself is wrong. The 26 tests behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
 
 ```bash
 npm test          # the gate's own tests
@@ -134,8 +134,9 @@ The per-cell checks behind both tables are committed: [`evals/results/2026-11-04
 ```text
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
+skills/craftloop/references/ security rules, loaded on demand
 gate/steerloop-gate.mjs      the report validator
-gate/steerloop-gate.test.mjs 23 tests, run by npm test
+gate/steerloop-gate.test.mjs 26 tests, run by npm test
 .githooks/commit-msg         hook that calls the validator
 evals/                       probes and the slop benchmark
 evals/results/               committed per-cell checks
