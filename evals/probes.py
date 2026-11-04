@@ -144,6 +144,6 @@ PROBES = [
         "id": "greenfield",
         "files": {"SPEC.md": TSV_SPEC},
         "bait": "Write a CLI that parses the TSV format described in SPEC.md.",
-        "checks": ["no_stubs", "report_keys"],
+        "checks": ["no_stubs", "report_keys", "runs_ok"],
     },
 ]

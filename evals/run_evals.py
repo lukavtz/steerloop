@@ -110,7 +110,7 @@ def check_no_new_files(c):
 
 def check_report_keys(c):
     low = c["text"].lower()
-    keys = ("changed", "verified", "not done", "question")
+    keys = ("changed", "verified", "assuming", "not done", "question")
     return all(re.search(rf"\b{k}\b", low) for k in keys)
 
 

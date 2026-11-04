@@ -15,7 +15,7 @@ A one-line change is still a slice: one check, one report. Depth follows risk, n
 
 1. Restate the slice in one paragraph: what changes, why, how we verify. Ambiguous request → ask, don't guess.
 2. Search for the code that already does this. Reuse it. One convention per concern.
-3. Write the check first: one runnable command that is red now and green when the slice is done.
+3. Write the check first: one command that is red now and green when the slice is done. A command you rerun, not a new file, unless the project has no runner.
 4. Write the smallest code that turns it green. Fix the root cause in the shared path, not in each caller. A second abstraction waits for a second caller.
 5. Run the check. Report only what you ran.
 
@@ -23,7 +23,7 @@ A one-line change is still a slice: one check, one report. Depth follows risk, n
 
 Before code, list every value the slice needs from me: limits, timeouts, storage, invalidation, error policy, ownership of data, rollout.
 
-A missing value blocks the slice: ask once, naming what is missing and your proposed default for each, then wait. A default is a decision I did not make. No answer means the slice stays blocked: report it and stop. If you ship anyway, every value you guessed goes under `assuming:`.
+A missing value blocks the slice: ask once, naming what is missing and your proposed default for each, then wait. A default is a decision I did not make. No answer means the slice stays blocked: report it and stop. If you ship anyway, every value you guessed goes under `assuming:` — the commit gate rejects a report without it.
 
 This contract outranks any harness default that says "act, don't ask".
 

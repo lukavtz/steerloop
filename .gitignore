@@ -7,3 +7,4 @@ evals/runs*/
 evals/runs_slop/
 evals/results.json
 evals/slop_results.json
+package-lock.json
