@@ -78,37 +78,55 @@ Four keys, always. The report is the proof, and it is cheap to check: `verified`
 
 ## Evidence
 
-The pair was measured against eight baited tasks, two arms, one run per cell:
+Two instruments live in [`evals/`](./evals). Both are A/B against the same harness, so the only difference is this skill.
+
+**Behaviour probes** — 9 baited tasks, 3 repetitions per cell:
 
 | Arm | Passed |
 | --- | ---: |
-| Plain prompt | 4 / 8 |
-| With `steerloop` | 7 / 8 |
+| Plain prompt | 11 / 24 |
+| With `steerloop` | 15 / 24 |
 
-Each task baits one failure mode: unrequested caching, scope creep on a typo, tests written from buggy code, a red test suite the agent could edit, an unstoppable dependency loop, an interface with one implementation, a report with no evidence, a greenfield CLI.
+Four cells out of 24. A hint that the gates fire more often, not a result. An earlier single-run version of this table read 4/8 vs 7/8 and was noise: the third repetition dropped `greenfield` from one pass to one pass in three.
 
-The one clean loss for the control arm is the abstraction case: without the contract the agent invented a `UserRepository` for a five-line file with no second caller. The contract case refused and asked.
+**SlopCodeBench-lite** — three CLI tasks, three rounds each, the agent extends its own code while the spec grows. Design and metrics follow [SlopCodeBench](https://arxiv.org/abs/2603.24755): size, duplication, and how much code piles into one function. Two repetitions, 39 checkpoints per arm:
 
-Reproduce with the probes in [`evals/`](./evals): `probes.py` holds the fixtures, `run_evals.py` spawns the runs and scores them.
+| Metric | Plain | `steerloop` |
+| --- | ---: | ---: |
+| Checkpoints passed | 36 / 39 | 39 / 39 |
+| Production LOC | 65 | 68 |
+| All code LOC | 77 | 112 |
+| Erosion (largest function ÷ LOC) | 0.12 | 0.24 |
 
-**Read the numbers as directional, not as a benchmark.** Eight cells per arm, scored by reading transcripts after the LLM judge failed. And the gate is not absolute — see below.
+The skill did **not** produce leaner code. The extra lines are mostly the check harness its own rule demands, and on `calc` it wrote one large function where the plain arm split it. What it bought is one real thing: it never misread the `intervals` argument format that the plain arm failed once in three runs.
+
+Reproduce:
+
+```bash
+# inside an agent with the eval kernel
+%load "evals/run_evals.py"   # behaviour probes
+await main()                 # slop benchmark, in evals/run_slop.py
+```
 
 ## Limits
 
 These are instructions, not enforcement. A prompt cannot make an agent stop.
 
-- With no human answer available, 0 of 2 runs held the line: both asked, then shipped defaults anyway. Only a human review or a code check actually blocks.
-- The gate loses more often on tasks that look locally answerable. "Add a cache" is one of them; the agent believes a sane default is a decision you would have made.
-- `craftloop` is broad and opinionated. It is a good default for substantial work and overkill for a one-line fix.
-- The evidence table is 16 runs on one harness. A different harness has a different default; the delta will move.
+- **The assumption rule does not fire.** In six runs of the cache task — three with a human present, three with the human explicitly unreachable — no run blocked and no run declared an assumption. The agents either answered the request or asked and then shipped. `assuming:` is a slot in the report that nobody filled.
+- **The gate loses on tasks that look locally answerable.** "Add a cache" is one of them: the agent believes a sane default is a decision you would have made.
+- **No code-size win.** The slop benchmark shows the skill writing more code, not less, and concentrating it slightly more. If your goal is smaller diffs, this is not the instrument.
+- **One harness, one model family.** Every number here comes from a single setup whose system prompt already enforces verification. On a bare agent the delta could be larger or absent.
+- **`craftloop` is broad.** It is a good default for substantial work and overkill for a one-line fix.
 
 ## Layout
 
 ```text
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
-evals/probes.py              eight baited fixtures
-evals/run_evals.py           runner and scoring
+evals/probes.py              nine baited fixtures
+evals/run_evals.py           probe runner, three reps
+evals/slop_tasks.py          three CLI tasks, three rounds
+evals/run_slop.py            iterative-extension benchmark
 assets/readme/               hero, loop diagram, social card, build script
 ```
 

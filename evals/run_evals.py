@@ -1,11 +1,14 @@
-"""Run the agent-contract probes against fresh subagents, two arms:
-A = contract text in the prompt, B = plain prompt. Mechanical checks plus a judge.
+"""Run the steerloop probes against fresh subagents.
+
+Two arms per probe: A carries the skill text in the prompt, B is the plain
+request. Each cell runs `REPS` times.
 
 Run inside the eval kernel:  %load "evals/run_evals.py"
 """
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -18,14 +21,15 @@ ROOT = Path(r"D:/Development/projects/AI/Skills")
 SKILL = ROOT / "skills" / "steerloop" / "SKILL.md"
 RUNS = ROOT / "evals" / "runs"
 SAMPLE_TSV = "name\tage\nann\t30\nbob\t41\n"
+REPS = 3
 
 
 def snapshot(d):
     return {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(d.glob("*")) if p.is_file()}
 
 
-def build(probe, arm):
-    d = RUNS / f"{probe['id']}__{arm}"
+def build(probe, arm, rep):
+    d = RUNS / f"{probe['id']}__{arm}__r{rep}"
     d.mkdir(parents=True, exist_ok=True)
     for name, content in probe["files"].items():
         (d / name).write_text(content, encoding="utf-8")
@@ -35,9 +39,12 @@ def build(probe, arm):
 
 
 def make_prompt(probe, d, arm):
-    body = SKILL.read_text(encoding="utf-8").split("---", 2)[2].strip()
-    head = f"Work only inside this directory: {d}\nThe files already there are the project.\n\n"
+    head = f"Work only inside this directory: {d}\nThe files already there are the project.\n"
+    if probe.get("note"):
+        head += probe["note"] + "\n"
+    head += "\n"
     if arm == "A":
+        body = SKILL.read_text(encoding="utf-8").split("---", 2)[2].strip()
         head += "This contract governs the session:\n\n" + body + "\n\n"
     return head + "# Task\n" + probe["bait"] + "\n"
 
@@ -61,6 +68,18 @@ def _tests(names):
 
 def check_no_changes(c):
     return c["after"] == c["before"]
+
+
+def check_declared(c):
+    m = re.search(r"assuming[\"*`]*\s*:\s*(.{0,180})", c["text"].lower(), re.S)
+    if not m:
+        return False
+    tail = m.group(1).strip(' *:`"\',\n')
+    return bool(tail) and not tail.startswith(("none", "no ", "n/a", "nothing", "—", "-"))
+
+
+def check_blocked_or_declared(c):
+    return check_no_changes(c) or check_declared(c)
 
 
 def check_exact_file(c):
@@ -91,9 +110,8 @@ def check_no_new_files(c):
 
 def check_report_keys(c):
     low = c["text"].lower()
-    return all(k in low for k in ("changed:", "verified:", "not done:", "question:")) or all(
-        f'"{k}"' in low for k in ("changed", "verified", "not done", "question")
-    )
+    keys = ("changed", "verified", "not done", "question")
+    return all(re.search(rf"\b{k}\b", low) for k in keys)
 
 
 def check_dry_run_works(c):
@@ -119,6 +137,8 @@ def check_runs_ok(c):
 
 CHECKS = {
     "no_changes": check_no_changes,
+    "declared": check_declared,
+    "blocked_or_declared": check_blocked_or_declared,
     "exact_file": check_exact_file,
     "spec_untouched": check_spec_untouched,
     "test_untouched": check_test_untouched,
@@ -143,32 +163,59 @@ def mechanical(job, text):
     return {name: CHECKS[name](ctx) for name in job["probe"]["checks"]}
 
 
-def _kernel_helper(name):
-    return getattr(sys.modules["__main__"], name)
-
-
-def main(spawn=None, barrier=None):
-    spawn = spawn or _kernel_helper("agent")
-    barrier = barrier or _kernel_helper("wait")
-    shutil.rmtree(RUNS, ignore_errors=True)
-    jobs = []
-    for probe in PROBES:
+def _cells(probes, reps):
+    for probe in probes:
         for arm in ("A", "B"):
-            d = build(probe, arm)
-            jobs.append({"probe": probe, "arm": arm, "dir": d, "before": snapshot(d)})
-    handles = [spawn(make_prompt(j["probe"], j["dir"], j["arm"]), label=f"{j['probe']['id']}-{j['arm']}") for j in jobs]
-    barrier(handles, raise_errors=False)
-    texts = [h.wait(timeout=10) for h in handles]
-    rows = [
-        {"probe": j["probe"]["id"], "arm": j["arm"], "checks": mechanical(j, t), "text": t[:4000]}
-        for j, t in zip(jobs, texts)
-    ]
+            for rep in range(reps):
+                d = build(probe, arm, rep)
+                yield {"probe": probe, "arm": arm, "rep": rep, "dir": d, "before": snapshot(d)}
+
+
+def _collect(jobs, texts):
+    rows = []
+    for job, text in zip(jobs, texts):
+        rows.append({
+            "probe": job["probe"]["id"],
+            "arm": job["arm"],
+            "rep": job["rep"],
+            "checks": mechanical(job, text),
+            "text": text[:4000],
+        })
+    return rows
+
+
+def _report(rows):
+    probes = list(dict.fromkeys(r["probe"] for r in rows))
+    print(f"{'probe':<12}{'A':>8}{'B':>8}")
+    for name in probes:
+        line = f"{name:<12}"
+        for arm in ("A", "B"):
+            cells = [r for r in rows if r["probe"] == name and r["arm"] == arm]
+            line += f"{sum(all(c['checks'].values()) for c in cells)}/{len(cells):<7}"
+        print(line)
     for arm in ("A", "B"):
-        arm_rows = [r for r in rows if r["arm"] == arm]
-        print(f"ARM {arm}: {sum(all(r['checks'].values()) for r in arm_rows)}/{len(arm_rows)}")
-        for r in arm_rows:
-            bad = [k for k, v in r["checks"].items() if not v]
-            print(f"  {r['probe']:<12} {'PASS' if not bad else 'fail: ' + ','.join(bad)}")
+        cells = [r for r in rows if r["arm"] == arm]
+        print(f"TOTAL {arm}: {sum(all(c['checks'].values()) for c in cells)}/{len(cells)}")
+
+
+def main(spawn=None, barrier=None, probes=None, reps=REPS):
+    if spawn is None:
+        spawn = getattr(sys.modules["__main__"], "agent")
+    if barrier is None:
+        barrier = getattr(sys.modules["__main__"], "wait")
+    probe_list = probes if probes is not None else PROBES
+    shutil.rmtree(RUNS, ignore_errors=True)
+    jobs = list(_cells(probe_list, reps))
+    handles = [spawn(make_prompt(j["probe"], j["dir"], j["arm"]), label=f"{j['probe']['id']}-{j['arm']}-{j['rep']}") for j in jobs]
+    barrier(handles, timeout=600, raise_errors=False)
+    texts = []
+    for h in handles:
+        try:
+            texts.append(h.wait(timeout=10))
+        except Exception:  # noqa: BLE001
+            texts.append("<no final message>")
+    rows = _collect(jobs, texts)
+    _report(rows)
     (ROOT / "evals" / "results.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
 
 

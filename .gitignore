@@ -4,3 +4,6 @@ node_modules/
 evals/runs*/
 .DS_Store
 .metrics/
+evals/runs_slop/
+evals/results.json
+evals/slop_results.json

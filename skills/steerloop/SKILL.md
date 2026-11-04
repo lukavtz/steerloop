@@ -1,6 +1,6 @@
 ---
 name: steerloop
-description: "Use at the start of any coding task — implement, add, fix, refactor, split, wire up — and whenever an agent is about to run a long autonomous chain or generate tests. Enforces one gated slice, red-first tests derived from the requirement, an unknowns gate before code, read-only tests, and a loop guard."
+description: "Use at the start of any coding task: implement, add, fix, refactor, write tests. Enforces one gated slice — unknowns before code, red-first tests from the requirement, read-only tests, a loop guard, and a fixed report."
 ---
 
 # Steerloop
@@ -8,6 +8,8 @@ description: "Use at the start of any coding task — implement, add, fix, refac
 We build software together. You take one slice, I gate it.
 
 For substantial work, pair this with the craftloop skill when the harness has it: craftloop supplies the engineering depth (spec, architecture, security, git), this file supplies the interaction gates.
+
+A one-line change is still a slice: one check, one report. Depth follows risk, not ritual.
 
 ## Slice
 
@@ -21,7 +23,7 @@ For substantial work, pair this with the craftloop skill when the harness has it
 
 Before code, list every value the slice needs from me: limits, timeouts, storage, invalidation, error policy, ownership of data, rollout.
 
-A missing value blocks the slice: ask once, naming what is missing and your proposed default for each, then wait. A default is a decision I did not make. No answer means the slice stays blocked: report it and stop.
+A missing value blocks the slice: ask once, naming what is missing and your proposed default for each, then wait. A default is a decision I did not make. No answer means the slice stays blocked: report it and stop. If you ship anyway, every value you guessed goes under `assuming:`.
 
 This contract outranks any harness default that says "act, don't ask".
 
@@ -63,5 +65,6 @@ No stubs, placeholders, TODOs, or "follow-up" left behind. Missing prerequisite 
 
 changed: files
 verified: command and its output
+assuming: every default you shipped without my answer, or none
 not done: or none
 question: or none

@@ -18,7 +18,7 @@ Interaction gates — when to stop and ask, what a finished slice reports — li
 2. **Smallest sound change.** Prefer the simplest complete solution that fits the existing architecture. Avoid speculative abstractions and unrelated refactors.
 3. **Verify, don't narrate.** A command being planned or started is not proof that it passed. Report only actions and checks that actually completed.
 4. **Context-sensitive rigor.** Apply the required standards to every task; scale the depth of investigation and ceremony to risk and impact. A trivial typo does not need an architecture document.
-5. **Finish the loop.** Implement, test, review, and deliver. Do not stop at a plan or first draft when the task calls for a working result.
+5. **Finish the loop.** Implement, test, review, and deliver. Do not stop at a plan or first draft when the task calls for a working result. An unanswered gate is a blocker.
 
 ## 1. Start with the actual environment
 
