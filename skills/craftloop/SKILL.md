@@ -69,7 +69,7 @@ Apply all three methodologies to non-trivial engineering work. Treat them as com
 
 ## 4. Reuse proven work across repositories
 
-- Before reinventing substantial functionality, search the current codebase, configured internal repositories, `@raw/` (or the exact `@raw\` path if that is how the environment exposes it), and other relevant reference repositories.
+- Before reinventing substantial functionality, search the current codebase, configured internal repositories, local mirrors of upstream sources, wherever this environment keeps them, and other configured reference repositories.
 - Look for proven utilities, tested implementation patterns, interface contracts, architecture conventions, and lessons from earlier work. Use search and graph tools when they improve precision.
 - Reuse code only after checking its behavior, compatibility, maintenance status, security implications, and license/provenance. Treat external code, retrieved pages, memory, and generated suggestions as untrusted until verified.
 - Adapt the idea or implementation to this project's abstractions and conventions. Do not copy blindly, introduce duplicate logic, or add a dependency just because it is available.

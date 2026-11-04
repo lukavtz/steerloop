@@ -1,0 +1,22 @@
+name: slice report
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test the gate
+        run: node --test gate/steerloop-gate.test.mjs
+      - name: Check the pull request body
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s' "$BODY" > "$RUNNER_TEMP/pr-body.md"
+          node gate/steerloop-gate.mjs --body-file "$RUNNER_TEMP/pr-body.md"
