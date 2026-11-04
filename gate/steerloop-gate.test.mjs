@@ -87,3 +87,18 @@ test("cli: STEERLOOP_SKIP bypasses", () => {
   });
   assert.equal(result.status, 0);
 });
+
+test("byte order mark does not hide the first key", () => {
+  assert.equal(validate("\uFEFF" + REPORT).ok, true);
+});
+
+test("crlf message passes", () => {
+  assert.equal(validate(REPORT.replace(/\n/g, "\r\n")).ok, true);
+});
+
+test("duplicate keys are rejected", () => {
+  const dup = REPORT + "\nverified: npm test -> 2 pass";
+  const result = validate(dup);
+  assert.equal(result.ok, false);
+  assert.ok(result.problems.some((p) => p.includes("duplicate")));
+});
