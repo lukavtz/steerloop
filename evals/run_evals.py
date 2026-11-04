@@ -14,10 +14,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, r"D:/Development/projects/AI/Skills/evals")
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "evals"))
 from probes import PROBES  # noqa: E402
 
-ROOT = Path(r"D:/Development/projects/AI/Skills")
 SKILL = ROOT / "skills" / "steerloop" / "SKILL.md"
 RUNS = ROOT / "evals" / "runs"
 SAMPLE_TSV = "name\tage\nann\t30\nbob\t41\n"

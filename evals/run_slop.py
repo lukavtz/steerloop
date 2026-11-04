@@ -14,10 +14,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, r"D:/Development/projects/AI/Skills/evals")
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "evals"))
 from slop_tasks import TASKS  # noqa: E402
 
-ROOT = Path(r"D:/Development/projects/AI/Skills")
 RUNS = ROOT / "evals" / "runs_slop"
 SKILL = ROOT / "skills" / "steerloop" / "SKILL.md"
 STRING_RE = re.compile(r"'[^']*'|\"[^\"]*\"|`[^`]*`")
