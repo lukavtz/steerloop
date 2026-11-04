@@ -32,7 +32,7 @@ function evidenceProblem(text) {
 }
 
 export function validate(text) {
-  if (/\[skip-gate\]/i.test(text) || /^Merge (branch|pull request)/i.test(text.trim())) {
+  if (/^\[skip-gate\][ \t]*$/im.test(text) || /^Merge (branch|pull request|remote-tracking branch|tag)\b/i.test(text.trim())) {
     return { ok: true, problems: [], skipped: true };
   }
   const problems = [...missingProblems(text), ...emptyProblems(text), ...evidenceProblem(text)];
