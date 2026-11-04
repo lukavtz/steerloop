@@ -47,7 +47,7 @@ or copy `gate/steerloop-gate.mjs` into your own tooling and call it from a `comm
 | `verified:` names something runnable | `verified: looked right` |
 | Merge commits and `[skip-gate]` | nothing — they pass |
 
-`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The eleven cases behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
+`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The 13 cases behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
 
 ```bash
 npm test          # the gate's own tests
@@ -112,12 +112,14 @@ The other seven probes, which do not depend on that field, split 27 / 35 against
 
 The size difference traces to one wording change. With the earlier rule, "write a check first" produced a new `check.mjs` per slice and the skill arm ran 47% larger. Reworded to "a command you rerun, not a new file", the same tasks came out smaller than the control. Treat the direction as a lead, not a finding: six cells per arm, and earlier runs disagreed.
 
-Reproduce:
+Reproduce (requires an omp session: the runners call the `agent`/`wait` helpers that the eval kernel injects into `__main__`):
 
 ```bash
-%load "evals/run_evals.py"    # probe suite, five repetitions
+%load "evals/run_evals.py"    # probe suite; main(reps=5) in the eval kernel
 await main()                  # in evals/run_slop.py, the slop benchmark
 ```
+
+`REPS` in `evals/run_evals.py` defaults to 3, while the table states 5 repetitions. Results (`evals/results.json`, `evals/slop_results.json`) are gitignored and no evidence artifact is committed, so the numbers are not reproducible from a fresh clone: they come from a local run. Set `REPS=5` and rerun to try to match.
 
 ## Limits
 
@@ -133,7 +135,7 @@ await main()                  # in evals/run_slop.py, the slop benchmark
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
 gate/steerloop-gate.mjs      the report validator
-gate/steerloop-gate.test.mjs eleven cases, run by CI
+gate/steerloop-gate.test.mjs 13 cases, run by npm test
 .githooks/commit-msg         hook that calls the validator
 evals/                       probes and the slop benchmark
 assets/readme/               hero, loop diagram, social card, build script
