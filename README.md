@@ -4,49 +4,64 @@
 
 <p align="center">
   <a href="#install">Install</a> ·
-  <a href="#what-changes">What changes</a> ·
-  <a href="#how-it-works">How it works</a> ·
+  <a href="#the-gate">The gate</a> ·
+  <a href="#the-skills">The skills</a> ·
   <a href="#evidence">Evidence</a> ·
   <a href="#limits">Limits</a>
 </p>
 
-Two skill files for coding agents. One keeps the agent on a single slice and makes it ask before it codes. The other is the engineering method it runs inside.
+One commit gate and two skill files for coding agents.
 
-They are small on purpose. `steerloop` is 65 lines. Every rule in it is a gate you can check, not a paragraph of advice.
+The gate is the part that cannot be ignored: it rejects a commit or a pull request whose message does not carry the five-key slice report. The skills describe how to produce one.
+
+```
+changed: parser.mjs, parser.test.mjs
+verified: node --test parser.test.mjs → 4 pass, 0 fail
+assuming: none
+not done: none
+question: none
+```
 
 ## Install
+
+Skills, into any agent that reads `SKILL.md`:
 
 ```bash
 npx skills add lukavtz/steerloop
 ```
 
-Works with any agent that reads `SKILL.md`: OpenCode, Claude Code, Cursor, Codex, omp, Pi, Dsh and the rest of the [skills CLI](https://skills.sh) targets. To preview without installing:
+Gate, in the repository you want to police:
 
 ```bash
-npx skills add lukavtz/steerloop --list
+git config core.hooksPath .githooks   # from a clone of this repo
 ```
 
-## What changes
+or copy `gate/steerloop-gate.mjs` into your own tooling and call it from a `commit-msg` hook or CI step.
 
-The failure this exists for is not bad code. It is code nobody asked for: an unrequested cache, an interface with one implementation, four hundred tests that assert what the code already does, and a loop that reruns them after every edit.
+## The gate
 
-| Default agent | With `steerloop` |
+| Check | Rejects |
 | --- | --- |
-| Picks a TTL, a storage, an error policy and ships them | Names the missing values, asks once, waits |
-| Writes tests from the code it just wrote | Writes the check from the requirement, red first |
-| Edits the failing test until it passes | Fixes the code the test describes; a test edit is a finding |
-| Adds the abstraction someone might need later | A second abstraction waits for a second caller |
-| Runs the suite after every edit, forever | One done-check per slice, targeted |
-| Reports "done" | Reports changed / verified / not done / question |
+| All five keys present | a message without `assuming:` |
+| Every value non-empty | `question:` with nothing after it |
+| `verified:` names something runnable | `verified: looked right` |
+| Merge commits and `[skip-gate]` | nothing — they pass |
 
-## The pair
+`STEERLOOP_SKIP=1` bypasses once, for the case where the gate itself is wrong. The eleven cases behind it live in [`gate/steerloop-gate.test.mjs`](./gate/steerloop-gate.test.mjs) and run with `npm test`.
+
+```bash
+npm test          # the gate's own tests
+npm run gate:check -- pr-body.md
+```
+
+## The skills
 
 | Skill | Owns | Fires when |
 | --- | --- | --- |
-| **`steerloop`** | Interaction gates: when to stop, what a slice is, what a report contains | Every coding task, at the start |
+| **`steerloop`** | Interaction gates: when to stop, what a slice is, what the report contains | Every coding task, at the start |
 | **`craftloop`** | Engineering depth: spec, architecture, security, verification, git and PR delivery | Substantial work |
 
-`steerloop` is the newer half of the pair. `craftloop` is included here with one changed sentence: its old "ask only when a material decision cannot be safely inferred" clause licensed the agent to invent exactly the values this pair exists to protect. It now says a value the request does not state is the user's decision.
+`craftloop` is vendored here with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
 
 ## How it works
 
@@ -54,79 +69,73 @@ The failure this exists for is not bad code. It is code nobody asked for: an unr
   <img src="./assets/readme/loop.svg" width="100%" alt="Five steps — restate, reuse, red check, smallest code, run — with an amber gate that sends missing values back to the human">
 </p>
 
-The gate sits between restating the slice and touching code. A value the request does not state blocks the slice. The agent asks once, proposes a default per item, and waits.
-
 A blocked slice reports like this:
 
 ```text
 changed: none
-verified: inspected store.mjs (5 lines), no importer of saveUser
+verified: `cat store.mjs` → 5 lines, no importer of saveUser
+assuming: none
 not done: all of it — blocked on the values below
 question: TTL, storage, error policy, invalidation, rollout?
 ```
 
-A finished slice reports like this:
-
-```text
-changed: parser.mjs, parser.test.mjs
-verified: node --test parser.test.mjs → 4 pass, 0 fail (red first: 2 failed)
-not done: none
-question: none
-```
-
-Four keys, always. The report is the proof, and it is cheap to check: `verified` names a command, so a claim without a command is visibly incomplete.
+The report is the part that survives contact with git. Everything else in the skill is advice the model may ignore; this block is checked.
 
 ## Evidence
 
-Two instruments live in [`evals/`](./evals). Both are A/B against the same harness, so the only difference is this skill.
+Two instruments in [`evals/`](./evals), both A/B on the same harness, so the only variable is the skill text.
 
-**Behaviour probes** — 9 baited tasks, 3 repetitions per cell:
+**Behaviour probes** — 9 baited tasks, 5 repetitions per cell, 45 cells per arm:
 
 | Arm | Passed |
 | --- | ---: |
-| Plain prompt | 11 / 24 |
-| With `steerloop` | 15 / 24 |
+| Plain prompt | 24 / 45 |
+| With `steerloop` | 37 / 45 |
 
-Four cells out of 24. A hint that the gates fire more often, not a result. An earlier single-run version of this table read 4/8 vs 7/8 and was noise: the third repetition dropped `greenfield` from one pass to one pass in three.
+Almost all of that gap sits in one rule. On the two tasks that need values the request never states, the skill arm disclosed or blocked 10 of 10 times; the plain arm 0 of 10:
 
-**SlopCodeBench-lite** — three CLI tasks, three rounds each, the agent extends its own code while the spec grows. Design and metrics follow [SlopCodeBench](https://arxiv.org/abs/2603.24755): size, duplication, and how much code piles into one function. Two repetitions, 39 checkpoints per arm:
+| Cache and no-answer tasks | Blocked | Declared the assumptions |
+| --- | ---: | ---: |
+| Plain prompt | 0 / 10 | 0 / 10 |
+| With `steerloop` | 2 / 10 | 8 / 10 |
+
+The other seven probes, which do not depend on that field, split 27 / 35 against 24 / 35. The skill changed one thing: default values now appear in the report instead of vanishing into the code.
+
+**SlopCodeBench-lite** — three CLI tasks, three rounds each, the agent extends its own code while the spec grows. Design and metrics follow [SlopCodeBench](https://arxiv.org/abs/2603.24755). Two repetitions, 26 checkpoints per arm:
 
 | Metric | Plain | `steerloop` |
 | --- | ---: | ---: |
-| Checkpoints passed | 36 / 39 | 39 / 39 |
-| Production LOC | 65 | 68 |
-| All code LOC | 77 | 112 |
-| Erosion (largest function ÷ LOC) | 0.12 | 0.24 |
+| Checkpoints passed | 26 / 26 | 26 / 26 |
+| Production LOC | 76 | 64 |
+| All code LOC | 85 | 82 |
+| Erosion (largest function ÷ LOC) | 0.17 | 0.12 |
 
-The skill did **not** produce leaner code. The extra lines are mostly the check harness its own rule demands, and on `calc` it wrote one large function where the plain arm split it. What it bought is one real thing: it never misread the `intervals` argument format that the plain arm failed once in three runs.
+The size difference traces to one wording change. With the earlier rule, "write a check first" produced a new `check.mjs` per slice and the skill arm ran 47% larger. Reworded to "a command you rerun, not a new file", the same tasks came out smaller than the control. Treat the direction as a lead, not a finding: six cells per arm, and earlier runs disagreed.
 
 Reproduce:
 
 ```bash
-# inside an agent with the eval kernel
-%load "evals/run_evals.py"   # behaviour probes
-await main()                 # slop benchmark, in evals/run_slop.py
+%load "evals/run_evals.py"    # probe suite, five repetitions
+await main()                  # in evals/run_slop.py, the slop benchmark
 ```
 
 ## Limits
 
-These are instructions, not enforcement. A prompt cannot make an agent stop.
-
-- **The assumption rule does not fire.** In six runs of the cache task — three with a human present, three with the human explicitly unreachable — no run blocked and no run declared an assumption. The agents either answered the request or asked and then shipped. `assuming:` is a slot in the report that nobody filled.
-- **The gate loses on tasks that look locally answerable.** "Add a cache" is one of them: the agent believes a sane default is a decision you would have made.
-- **No code-size win.** The slop benchmark shows the skill writing more code, not less, and concentrating it slightly more. If your goal is smaller diffs, this is not the instrument.
-- **One harness, one model family.** Every number here comes from a single setup whose system prompt already enforces verification. On a bare agent the delta could be larger or absent.
-- **`craftloop` is broad.** It is a good default for substantial work and overkill for a one-line fix.
+- **Prose does not enforce.** The only measured effect of the skill text is the check-file wording. Every other rule was followed at the rate of the control arm.
+- **The gate enforces format, not thought.** It can verify that a `verified:` line exists and looks like a command. It cannot verify that the command was run or that the output was real. That is the honest ceiling of a hook.
+- **One harness, one model family.** Every number comes from a setup whose system prompt already enforces verification. On a bare agent the delta could differ in either direction.
+- **The assumption field discloses, it does not stop.** With the skill present, 8 of 10 runs shipped the guessed values anyway and 2 blocked. That is better than silence, and it is not the behaviour the skill asks for.
+- **The gate cannot tell a declared assumption from an honest one.** `assuming: none` passes whether or not the agent guessed. Presence is checkable; truth is not.
 
 ## Layout
 
 ```text
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
-evals/probes.py              nine baited fixtures
-evals/run_evals.py           probe runner, three reps
-evals/slop_tasks.py          three CLI tasks, three rounds
-evals/run_slop.py            iterative-extension benchmark
+gate/steerloop-gate.mjs      the report validator
+gate/steerloop-gate.test.mjs eleven cases, run by CI
+.githooks/commit-msg         hook that calls the validator
+evals/                       probes and the slop benchmark
 assets/readme/               hero, loop diagram, social card, build script
 ```
 

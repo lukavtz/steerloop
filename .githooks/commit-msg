@@ -1,0 +1,3 @@
+#!/bin/sh
+# Validates the five-key slice report in the commit message.
+exec node "$(git rev-parse --show-toplevel)/gate/steerloop-gate.mjs" "$1"

@@ -1,7 +1,7 @@
 {
   "name": "steerloop",
-  "version": "0.1.0",
-  "description": "Two agent skills that keep a coding agent on one slice: ask before coding, red-first tests, stop gates, honest reports.",
+  "version": "0.2.0",
+  "description": "Two agent skills that keep a coding agent on one slice: ask before coding, red-first tests, stop gates, honest reports — plus a commit gate that enforces the report.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,10 +15,21 @@
     "claude-code",
     "codex",
     "opencode",
-    "prompt-engineering"
+    "prompt-engineering",
+    "commit-hook"
   ],
+  "bin": {
+    "steerloop-gate": "./gate/steerloop-gate.mjs"
+  },
+  "scripts": {
+    "test": "node --test gate/steerloop-gate.test.mjs",
+    "gate:install": "git config core.hooksPath .githooks",
+    "gate:check": "node gate/steerloop-gate.mjs --body-file"
+  },
   "files": [
     "skills",
+    "gate",
+    ".githooks",
     "README.md",
     "LICENSE"
   ]
