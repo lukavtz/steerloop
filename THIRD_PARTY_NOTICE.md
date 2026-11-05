@@ -10,6 +10,8 @@ Skills vendored from other repositories. All are MIT; the license text for each 
 | `stop-slop` | hardikpandya/stop-slop | `8da1f03` | `hardikpandya-stop-slop.txt` |
 | `anatomy` | wheresryan22/anatomy | `1482e84` | `wheresryan22-anatomy.txt` |
 | `beautify-github-readme` | oil-oil/beautify-github-readme | `d6562a5` | `oil-oil-beautify-github-readme.txt` |
+| `ru-text`, `ru-check`, `ru-score` | talkstream/ru-text | `e398aec` | `talkstream-ru-text.txt` |
+| `humanizer-ru` | ilyautov/humanizer-ru | `b6df5d9` | `ilyautov-humanizer-ru.txt` |
 
 Files are copied verbatim and not modified here.
 
@@ -17,5 +19,10 @@ Deliberate omissions, to keep the repository small:
 
 - `anatomy` ships without `examples/` (A4 PDFs and demo HTML, 10 MB).
 - `hallmark` ships with its theme images, because the theme references point at them.
+
+Two skills carry code that this repository does not run in CI:
+
+- `humanizer-ru` ships its Python scanner and metrics package verbatim. The skill falls back to manual editing when the scanner is unavailable.
+- `anatomy` ships its Node audit scripts verbatim; they need Chrome, as its own documentation states.
 
 `steerloop`, `webperf` and the gate are original to this repository. `craftloop` belongs to its author and is included with two sentences changed, noted in the README.
