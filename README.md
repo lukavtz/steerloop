@@ -10,7 +10,7 @@
   <a href="#limits">Limits</a>
 </p>
 
-One commit gate and two skill files for coding agents.
+One commit gate and three skill files for coding agents.
 
 The gate is the part that cannot be ignored: it rejects a commit or a pull request whose message does not carry the five-key slice report. The skills describe how to produce one.
 
@@ -60,6 +60,7 @@ npm run gate:check -- pr-body.md
 | --- | --- | --- |
 | **`steerloop`** | Interaction gates: when to stop, what a slice is, what the report contains | Every coding task, at the start |
 | **`craftloop`** | Engineering depth: spec, architecture, security, verification, git and PR delivery | Substantial work |
+| **`webperf`** | Web performance: symptom to one fix with the instrument that proves it | A slow page, or a change touching loading, bundles, images, queries |
 
 `craftloop` is vendored here with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
 
@@ -135,6 +136,8 @@ The per-cell checks behind both tables are committed: [`evals/results/2026-11-04
 skills/steerloop/SKILL.md    the contract
 skills/craftloop/SKILL.md    the method
 skills/craftloop/references/ security rules, loaded on demand
+skills/webperf/SKILL.md      web performance router
+skills/webperf/references/   31 recipes, one per symptom
 gate/steerloop-gate.mjs      the report validator
 gate/steerloop-gate.test.mjs 26 tests, run by npm test
 .githooks/commit-msg         hook that calls the validator
