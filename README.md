@@ -10,7 +10,7 @@
   <a href="#limits">Limits</a>
 </p>
 
-One commit gate and five skill files for coding agents.
+One commit gate and ten skill files for coding agents.
 
 The gate is the part that cannot be ignored: it rejects a commit or a pull request whose message does not carry the five-key slice report. The skills describe how to produce one.
 
@@ -56,17 +56,16 @@ npm run gate:check -- pr-body.md
 
 ## The skills
 
-| Skill | Owns | Fires when |
+| Group | Skills | Fires when |
 | --- | --- | --- |
-| **`steerloop`** | Interaction gates: when to stop, what a slice is, what the report contains | Every coding task, at the start |
-| **`craftloop`** | Engineering depth: spec, architecture, security, verification, git and PR delivery | Substantial work |
-| **`webperf`** | Web performance: symptom to one fix with the instrument that proves it | A slow page, or a change touching loading, bundles, images, queries |
-| **`landing-page-design`** | Landing pages end to end: intake, structure, copy, and a fixed visual system | Building or reviewing a marketing page, section, or component |
-| **`figma-designer`** | Designing inside Figma with variables, text styles and auto layout | Work on a Figma file through the Figma MCP |
+| Process | `steerloop`, `craftloop`, `be-ambitious` | Every coding task; substantial work; a request worth deepening rather than enlarging |
+| Web | `webperf` | A slow page, or a change touching loading, bundles, images, queries |
+| Design | `landing-page-design`, `figma-designer`, `hallmark`, `anatomy`, `beautify-github-readme` | A landing page, a Figma file, an anti-slop visual pass, an isometric figure, a repository README |
+| Prose | `stop-slop` | Drafting, editing or reviewing text |
 
-`craftloop` is vendored here with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
+`steerloop` is the only one this repository measures. `craftloop` is included with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
 
-`landing-page-design` and `figma-designer` are MIT, copied verbatim from their author at a pinned commit. Provenance and license: [`THIRD_PARTY_NOTICE.md`](./THIRD_PARTY_NOTICE.md).
+The rest are vendored under MIT at pinned commits, copied verbatim. Provenance, licenses and what was left out: [`THIRD_PARTY_NOTICE.md`](./THIRD_PARTY_NOTICE.md).
 
 ## How it works
 
@@ -142,8 +141,8 @@ skills/craftloop/SKILL.md    the method
 skills/craftloop/references/ security rules, loaded on demand
 skills/webperf/SKILL.md      web performance router
 skills/webperf/references/   31 recipes, one per symptom
-skills/landing-page-design/  vendored, MIT, see THIRD_PARTY_NOTICE.md
-skills/figma-designer/       vendored, MIT, see THIRD_PARTY_NOTICE.md
+skills/*                     five original, five vendored
+THIRD_PARTY_LICENSES/        MIT texts for the vendored skills
 gate/steerloop-gate.mjs      the report validator
 gate/steerloop-gate.test.mjs 26 tests, run by npm test
 .githooks/commit-msg         hook that calls the validator
