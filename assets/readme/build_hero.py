@@ -43,7 +43,7 @@ def hero() -> None:
     canvas.paste(panel, (500, 16), panel)
 
     d = ImageDraw.Draw(canvas)
-    d.text((72, 104), "AGENT SKILLS  ·  THREE FILES", font=font("consola.ttf", 17), fill=MUTED)
+    d.text((72, 104), "AGENT SKILLS  ·  FIVE FILES", font=font("consola.ttf", 17), fill=MUTED)
     d.text((72, 146), "steerloop", font=font("segoeuib.ttf", 92), fill=FG)
     d.text((74, 262), "One slice at a time. The agent asks", font=font("segoeui.ttf", 25), fill=(201, 205, 210))
     d.text((74, 296), "before it writes code.", font=font("segoeui.ttf", 25), fill=(201, 205, 210))
@@ -55,7 +55,7 @@ def hero() -> None:
     d.text((90, 362), cmd, font=cf, fill=ACCENT)
 
     d.line([(72, 420), (72 + tw + 36, 420)], fill=(58, 58, 58))
-    d.text((72, 430), "skills/steerloop · skills/craftloop · skills/webperf · MIT", font=font("consola.ttf", 14), fill=DIM)
+    d.text((72, 430), "steerloop · craftloop · webperf · landing-page-design · figma-designer", font=font("consola.ttf", 14), fill=DIM)
     canvas.save(HERE / "hero.png", optimize=True)
 
 

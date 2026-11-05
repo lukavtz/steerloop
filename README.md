@@ -10,7 +10,7 @@
   <a href="#limits">Limits</a>
 </p>
 
-One commit gate and three skill files for coding agents.
+One commit gate and five skill files for coding agents.
 
 The gate is the part that cannot be ignored: it rejects a commit or a pull request whose message does not carry the five-key slice report. The skills describe how to produce one.
 
@@ -61,8 +61,12 @@ npm run gate:check -- pr-body.md
 | **`steerloop`** | Interaction gates: when to stop, what a slice is, what the report contains | Every coding task, at the start |
 | **`craftloop`** | Engineering depth: spec, architecture, security, verification, git and PR delivery | Substantial work |
 | **`webperf`** | Web performance: symptom to one fix with the instrument that proves it | A slow page, or a change touching loading, bundles, images, queries |
+| **`landing-page-design`** | Landing pages end to end: intake, structure, copy, and a fixed visual system | Building or reviewing a marketing page, section, or component |
+| **`figma-designer`** | Designing inside Figma with variables, text styles and auto layout | Work on a Figma file through the Figma MCP |
 
 `craftloop` is vendored here with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
+
+`landing-page-design` and `figma-designer` are MIT, copied verbatim from their author at a pinned commit. Provenance and license: [`THIRD_PARTY_NOTICE.md`](./THIRD_PARTY_NOTICE.md).
 
 ## How it works
 
@@ -138,6 +142,8 @@ skills/craftloop/SKILL.md    the method
 skills/craftloop/references/ security rules, loaded on demand
 skills/webperf/SKILL.md      web performance router
 skills/webperf/references/   31 recipes, one per symptom
+skills/landing-page-design/  vendored, MIT, see THIRD_PARTY_NOTICE.md
+skills/figma-designer/       vendored, MIT, see THIRD_PARTY_NOTICE.md
 gate/steerloop-gate.mjs      the report validator
 gate/steerloop-gate.test.mjs 26 tests, run by npm test
 .githooks/commit-msg         hook that calls the validator
