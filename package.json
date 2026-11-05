@@ -30,6 +30,8 @@
     "skills",
     "gate",
     ".githooks",
+    "THIRD_PARTY_NOTICE.md",
+    "THIRD_PARTY_LICENSE",
     "README.md",
     "LICENSE"
   ]
