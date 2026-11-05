@@ -10,7 +10,7 @@
   <a href="#limits">Limits</a>
 </p>
 
-One commit gate and ten skill files for coding agents.
+One commit gate and fourteen skill files for coding agents.
 
 The gate is the part that cannot be ignored: it rejects a commit or a pull request whose message does not carry the five-key slice report. The skills describe how to produce one.
 
@@ -61,7 +61,7 @@ npm run gate:check -- pr-body.md
 | Process | `steerloop`, `craftloop`, `be-ambitious` | Every coding task; substantial work; a request worth deepening rather than enlarging |
 | Web | `webperf` | A slow page, or a change touching loading, bundles, images, queries |
 | Design | `landing-page-design`, `figma-designer`, `hallmark`, `anatomy`, `beautify-github-readme` | A landing page, a Figma file, an anti-slop visual pass, an isometric figure, a repository README |
-| Prose | `stop-slop` | Drafting, editing or reviewing text |
+| Prose | `stop-slop`, `ru-text`, `ru-check`, `ru-score`, `humanizer-ru` | Drafting, editing or reviewing text, in English or Russian; typography that applies to every Russian output |
 
 `steerloop` is the only one this repository measures. `craftloop` is included with two sentences changed: an unanswered gate counts as a blocker, and a value the request does not state is the user's decision rather than a default to invent.
 
