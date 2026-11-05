@@ -52,6 +52,6 @@ Repeat the same measurement after the fix and report both.
 
 ## Full recipes
 
-[`references/prompts.md`](references/prompts.md) holds 31 recipes, one per topic above, kept in Russian. Read the numbered section that matches the symptom: the wording is more specific than this table, and each recipe ends with its own check.
+[`references/prompts.md`](references/prompts.md) holds 31 recipes, one per topic above. Read the numbered section that matches the symptom: the wording is more specific than this table, and each recipe ends with its own check.
 
 Take one recipe per slice. Run its check. If the recipe does not fit this stack, say so and change nothing.
