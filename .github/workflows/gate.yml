@@ -14,6 +14,8 @@ jobs:
           node-version: 22
       - name: Test the gate
         run: node --test gate/steerloop-gate.test.mjs
+      - name: Validate skills and stack.json
+        run: node scripts/validate-skills.mjs
       - name: Check the pull request body
         env:
           BODY: ${{ github.event.pull_request.body }}
