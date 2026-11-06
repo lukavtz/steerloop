@@ -1,6 +1,6 @@
 {
   "name": "steerloop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Two agent skills that keep a coding agent on one slice: ask before coding, red-first tests, stop gates, honest reports — plus a commit gate that enforces the report.",
   "license": "MIT",
   "repository": {
@@ -22,14 +22,17 @@
     "steerloop-gate": "./gate/steerloop-gate.mjs"
   },
   "scripts": {
-    "test": "node --test gate/steerloop-gate.test.mjs",
+    "test": "node --test gate/steerloop-gate.test.mjs && node scripts/validate-skills.mjs",
     "gate:install": "git config core.hooksPath .githooks",
-    "gate:check": "node gate/steerloop-gate.mjs --body-file"
+    "gate:check": "node gate/steerloop-gate.mjs --body-file",
+    "validate": "node scripts/validate-skills.mjs"
   },
   "files": [
     "skills",
     "gate",
+    "scripts",
     ".githooks",
+    "stack.json",
     "THIRD_PARTY_NOTICE.md",
     "THIRD_PARTY_LICENSES",
     "README.md",

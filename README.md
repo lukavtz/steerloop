@@ -38,6 +38,20 @@ git config core.hooksPath .githooks   # from a clone of this repo
 
 or copy `gate/steerloop-gate.mjs` into your own tooling and call it from a `commit-msg` hook or CI step.
 
+## Profiles
+
+Not every project needs fourteen skills. `stack.json` is the machine-readable list; these are the same groups as commands:
+
+| Profile | What it covers | Install |
+| --- | --- | --- |
+| core | Gates, method, deepening | `npx skills add lukavtz/steerloop --skill steerloop --skill craftloop --skill be-ambitious` |
+| web | Core plus performance and a landing page | `npx skills add lukavtz/steerloop --skill steerloop --skill craftloop --skill webperf --skill landing-page-design` |
+| design | Page, Figma, anti-slop pass, figures, README | `npx skills add lukavtz/steerloop --skill landing-page-design --skill figma-designer --skill hallmark --skill anatomy --skill beautify-github-readme` |
+| text | English and Russian prose | `npx skills add lukavtz/steerloop --skill stop-slop --skill ru-text --skill ru-check --skill ru-score --skill humanizer-ru` |
+| full | All fourteen | `npx skills add lukavtz/steerloop` |
+
+`npm test` validates every `SKILL.md` frontmatter and checks that `stack.json` matches the tree, so a skill cannot be added without being listed.
+
 ## The gate
 
 | Check | Rejects |
@@ -141,7 +155,9 @@ skills/craftloop/SKILL.md    the method
 skills/craftloop/references/ security rules, loaded on demand
 skills/webperf/SKILL.md      web performance router
 skills/webperf/references/   31 recipes, one per symptom
-skills/*                     five original, five vendored
+skills/*                     fourteen skills, five original
+scripts/validate-skills.mjs  frontmatter and stack.json check
+stack.json                   skills, profiles, origins, licenses
 THIRD_PARTY_LICENSES/        MIT texts for the vendored skills
 gate/steerloop-gate.mjs      the report validator
 gate/steerloop-gate.test.mjs 26 tests, run by npm test

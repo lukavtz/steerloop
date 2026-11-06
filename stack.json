@@ -1,0 +1,45 @@
+{
+  "name": "steerloop",
+  "version": "0.3.0",
+  "license": "MIT",
+  "install": "npx skills add lukavtz/steerloop",
+  "gate": "git config core.hooksPath .githooks",
+  "profiles": {
+    "core": ["steerloop", "craftloop", "be-ambitious"],
+    "web": ["steerloop", "craftloop", "webperf", "landing-page-design"],
+    "design": ["landing-page-design", "figma-designer", "hallmark", "anatomy", "beautify-github-readme"],
+    "text": ["stop-slop", "ru-text", "ru-check", "ru-score", "humanizer-ru"],
+    "full": [
+      "steerloop",
+      "craftloop",
+      "be-ambitious",
+      "webperf",
+      "landing-page-design",
+      "figma-designer",
+      "hallmark",
+      "anatomy",
+      "beautify-github-readme",
+      "stop-slop",
+      "ru-text",
+      "ru-check",
+      "ru-score",
+      "humanizer-ru"
+    ]
+  },
+  "skills": {
+    "steerloop": { "origin": "original", "license": "MIT" },
+    "craftloop": { "origin": "original", "license": "MIT" },
+    "webperf": { "origin": "original", "license": "MIT" },
+    "landing-page-design": { "origin": "elayadesign/ai-design-skills@456d9e0", "license": "MIT" },
+    "figma-designer": { "origin": "elayadesign/ai-design-skills@456d9e0", "license": "MIT" },
+    "be-ambitious": { "origin": "DannyMac180/skills@7dc63b7", "license": "MIT" },
+    "hallmark": { "origin": "nutlope/hallmark@407fa68", "license": "MIT" },
+    "stop-slop": { "origin": "hardikpandya/stop-slop@8da1f03", "license": "MIT" },
+    "anatomy": { "origin": "wheresryan22/anatomy@1482e84", "license": "MIT" },
+    "beautify-github-readme": { "origin": "oil-oil/beautify-github-readme@d6562a5", "license": "MIT" },
+    "ru-text": { "origin": "talkstream/ru-text@e398aec", "license": "MIT" },
+    "ru-check": { "origin": "talkstream/ru-text@e398aec", "license": "MIT" },
+    "ru-score": { "origin": "talkstream/ru-text@e398aec", "license": "MIT" },
+    "humanizer-ru": { "origin": "ilyautov/humanizer-ru@b6df5d9", "license": "MIT" }
+  }
+}
